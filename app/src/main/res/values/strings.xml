@@ -9,6 +9,8 @@
 
     <string name="content_save_bitmap_result">Bitmap保存成功，路径：%1$s</string>
 
-    <string name="title_screen_capture">系统截图</string>
+    <string name="screen_capture_start">开始系统截图</string>
+    <string name="screen_capture_stop">停止系统截图</string>
+    <string name="screen_capture">系统截图</string>
 
 </resources>

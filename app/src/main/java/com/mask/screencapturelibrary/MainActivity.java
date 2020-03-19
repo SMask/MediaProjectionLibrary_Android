@@ -19,28 +19,19 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    private View layout_root;
+    private View layout_group_1;
+    private View layout_group_2;
+    private View layout_group_3;
+    private View layout_space;
+    private Button btn_screen_capture_start;
+    private Button btn_screen_capture_stop;
     private Button btn_screen_capture;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ScreenCaptureHelper.getInstance().parseResult(requestCode, resultCode, data, new ScreenCaptureCallback() {
-            @Override
-            public void onSuccess(Bitmap bitmap) {
-                super.onSuccess(bitmap);
-
-                LogUtil.i("ScreenCapture onSuccess");
-
-                saveBitmapToFile(bitmap, "ScreenCapture");
-            }
-
-            @Override
-            public void onFail() {
-                super.onFail();
-
-                LogUtil.e("ScreenCapture onFail");
-            }
-        });
+        ScreenCaptureHelper.getInstance().parseResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -53,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        layout_root = findViewById(R.id.layout_root);
+        layout_group_1 = findViewById(R.id.layout_group_1);
+        layout_group_2 = findViewById(R.id.layout_group_2);
+        layout_group_3 = findViewById(R.id.layout_group_3);
+        layout_space = findViewById(R.id.layout_space);
+        btn_screen_capture_start = findViewById(R.id.btn_screen_capture_start);
+        btn_screen_capture_stop = findViewById(R.id.btn_screen_capture_stop);
         btn_screen_capture = findViewById(R.id.btn_screen_capture);
     }
 
@@ -61,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+        btn_screen_capture_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doScreenCaptureStart();
+            }
+        });
+        btn_screen_capture_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doScreenCaptureStop();
+            }
+        });
         btn_screen_capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,10 +80,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * 开始系统截图
+     */
+    private void doScreenCaptureStart() {
+        ScreenCaptureHelper.getInstance().startCapture(this);
+    }
+
+    /**
+     * 停止系统截图
+     */
+    private void doScreenCaptureStop() {
+        ScreenCaptureHelper.getInstance().stopCapture();
+    }
+
+    /**
      * 系统截图
      */
     private void doScreenCapture() {
-        ScreenCaptureHelper.getInstance().startCapture(this);
+        ScreenCaptureHelper.getInstance().capture(new ScreenCaptureCallback() {
+            @Override
+            public void onSuccess(Bitmap bitmap) {
+                super.onSuccess(bitmap);
+
+                LogUtil.i("ScreenCapture onSuccess");
+//
+//                int[] position = new int[2];
+//                layout_space.getLocationOnScreen(position);
+//                int width = layout_space.getWidth();
+//                int height = layout_space.getHeight();
+//                bitmap = Bitmap.createBitmap(bitmap, position[0], position[1], width, height);
+
+                saveBitmapToFile(bitmap, "ScreenCapture");
+            }
+
+            @Override
+            public void onFail() {
+                super.onFail();
+
+                LogUtil.e("ScreenCapture onFail");
+            }
+        });
     }
 
     /**
