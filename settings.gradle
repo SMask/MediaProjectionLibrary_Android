@@ -1,0 +1,3 @@
+rootProject.name='ScreenCaptureLibrary_Android'
+include ':app'
+include ':ScreenCapture'

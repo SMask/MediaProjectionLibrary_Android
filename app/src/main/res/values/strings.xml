@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">ScreenCaptureLibrary_Android</string>
+
+    <string name="title_view_root">ViewRoot</string>
+    <string name="title_view_group_1">ViewGroup_1</string>
+    <string name="title_view_group_2">ViewGroup_2</string>
+    <string name="title_view_group_3">ViewGroup_3</string>
+
+    <string name="content_save_bitmap_result">Bitmap保存成功，路径：%1$s</string>
+
+    <string name="title_screen_capture">系统截图</string>
+
+</resources>

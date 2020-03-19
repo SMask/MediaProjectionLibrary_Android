@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion var.compileSdkVersion
+
+    defaultConfig {
+        applicationId var.applicationId
+        minSdkVersion var.minSdkVersion
+        targetSdkVersion var.targetSdkVersion
+        versionCode var.versionCode
+        versionName var.versionName
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation project(':ScreenCapture')
+    implementation "androidx.appcompat:appcompat:$var.AppCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$var.ConstraintLayoutVersion"
+}
