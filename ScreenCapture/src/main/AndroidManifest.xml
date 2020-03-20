@@ -7,7 +7,7 @@
     <application>
 
         <service
-            android:name=".service.ScreenCaptureService"
+            android:name=".service.MediaProjectionService"
             android:foregroundServiceType="mediaProjection" />
 
     </application>

@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mask.photo.interfaces.SaveBitmapCallback;
 import com.mask.photo.utils.BitmapUtils;
+import com.mask.screencapture.interfaces.MediaProjectionNotificationEngine;
+import com.mask.screencapture.interfaces.MediaRecorderCallback;
 import com.mask.screencapture.interfaces.ScreenCaptureCallback;
-import com.mask.screencapture.interfaces.ScreenCaptureNotificationEngine;
-import com.mask.screencapture.utils.ScreenCaptureHelper;
+import com.mask.screencapture.utils.MediaProjectionHelper;
 
 import java.io.File;
 
@@ -26,14 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private View layout_group_2;
     private View layout_group_3;
     private View layout_space;
-    private Button btn_screen_capture_start;
-    private Button btn_screen_capture_stop;
+    private Button btn_service_start;
+    private Button btn_service_stop;
     private Button btn_screen_capture;
+    private Button btn_media_recorder_start;
+    private Button btn_media_recorder_stop;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ScreenCaptureHelper.getInstance().parseResult(requestCode, resultCode, data);
+        MediaProjectionHelper.getInstance().createVirtualDisplay(requestCode, resultCode, data, true, true);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        ScreenCaptureHelper.getInstance().stopCapture(this);
+        MediaProjectionHelper.getInstance().stopService(this);
         super.onDestroy();
     }
 
@@ -57,19 +60,22 @@ public class MainActivity extends AppCompatActivity {
         layout_group_2 = findViewById(R.id.layout_group_2);
         layout_group_3 = findViewById(R.id.layout_group_3);
         layout_space = findViewById(R.id.layout_space);
-        btn_screen_capture_start = findViewById(R.id.btn_screen_capture_start);
-        btn_screen_capture_stop = findViewById(R.id.btn_screen_capture_stop);
+        btn_service_start = findViewById(R.id.btn_service_start);
+        btn_service_stop = findViewById(R.id.btn_service_stop);
         btn_screen_capture = findViewById(R.id.btn_screen_capture);
+        btn_media_recorder_start = findViewById(R.id.btn_media_recorder_start);
+        btn_media_recorder_stop = findViewById(R.id.btn_media_recorder_stop);
     }
 
     private void initData() {
-        ScreenCaptureHelper.getInstance().setNotificationEngine(new ScreenCaptureNotificationEngine() {
+        MediaProjectionHelper.getInstance().setNotificationEngine(new MediaProjectionNotificationEngine() {
             @Override
             public Notification getNotification() {
+                String title = getString(R.string.service_start);
                 return NotificationHelper.getInstance().createSystem()
                         .setOngoing(true)// 常驻通知栏
-                        .setTicker(getString(R.string.screen_capture_start))
-                        .setContentText(getString(R.string.screen_capture_start))
+                        .setTicker(title)
+                        .setContentText(title)
                         .setDefaults(Notification.DEFAULT_ALL)
                         .build();
             }
@@ -77,16 +83,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        btn_screen_capture_start.setOnClickListener(new View.OnClickListener() {
+        btn_service_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doScreenCaptureStart();
+                doServiceStart();
             }
         });
-        btn_screen_capture_stop.setOnClickListener(new View.OnClickListener() {
+        btn_service_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doScreenCaptureStop();
+                doServiceStop();
             }
         });
         btn_screen_capture.setOnClickListener(new View.OnClickListener() {
@@ -95,27 +101,39 @@ public class MainActivity extends AppCompatActivity {
                 doScreenCapture();
             }
         });
+        btn_media_recorder_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doMediaRecorderStart();
+            }
+        });
+        btn_media_recorder_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doMediaRecorderStop();
+            }
+        });
     }
 
     /**
-     * 开始系统截图
+     * 启动媒体投影服务
      */
-    private void doScreenCaptureStart() {
-        ScreenCaptureHelper.getInstance().startCapture(this);
+    private void doServiceStart() {
+        MediaProjectionHelper.getInstance().startService(this);
     }
 
     /**
-     * 停止系统截图
+     * 停止媒体投影服务
      */
-    private void doScreenCaptureStop() {
-        ScreenCaptureHelper.getInstance().stopCapture(this);
+    private void doServiceStop() {
+        MediaProjectionHelper.getInstance().stopService(this);
     }
 
     /**
-     * 系统截图
+     * 屏幕截图
      */
     private void doScreenCapture() {
-        ScreenCaptureHelper.getInstance().capture(new ScreenCaptureCallback() {
+        MediaProjectionHelper.getInstance().capture(new ScreenCaptureCallback() {
             @Override
             public void onSuccess(Bitmap bitmap) {
                 super.onSuccess(bitmap);
@@ -136,6 +154,36 @@ public class MainActivity extends AppCompatActivity {
                 super.onFail();
 
                 LogUtil.e("ScreenCapture onFail");
+            }
+        });
+    }
+
+    /**
+     * 开始屏幕录制
+     */
+    private void doMediaRecorderStart() {
+        MediaProjectionHelper.getInstance().startMediaRecorder();
+    }
+
+    /**
+     * 停止屏幕录制
+     */
+    private void doMediaRecorderStop() {
+        MediaProjectionHelper.getInstance().stopMediaRecorder(new MediaRecorderCallback() {
+            @Override
+            public void onSuccess(File file) {
+                super.onSuccess(file);
+
+                LogUtil.i("MediaRecorder onSuccess");
+
+                Toast.makeText(getApplication(), getString(R.string.content_media_recorder_result, file.getAbsolutePath()), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFail() {
+                super.onFail();
+
+                LogUtil.e("MediaRecorder onFail");
             }
         });
     }

@@ -8,9 +8,14 @@
     <string name="title_view_group_3">ViewGroup_3</string>
 
     <string name="content_save_bitmap_result">Bitmap保存成功，路径：%1$s</string>
+    <string name="content_media_recorder_result">屏幕录制成功，路径：%1$s</string>
 
-    <string name="screen_capture_start">开始系统截图</string>
-    <string name="screen_capture_stop">停止系统截图</string>
-    <string name="screen_capture">系统截图</string>
+    <string name="service_start">启动媒体投影服务</string>
+    <string name="service_stop">停止媒体投影服务</string>
+
+    <string name="screen_capture">屏幕截图</string>
+
+    <string name="media_recorder_start">开始屏幕录制</string>
+    <string name="media_recorder_stop">停止屏幕录制</string>
 
 </resources>
