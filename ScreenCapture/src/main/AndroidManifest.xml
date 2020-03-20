@@ -1,1 +1,15 @@
-<manifest package="com.mask.screencapture" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mask.screencapture">
+
+    <!-- Android 9.0上使用前台服务，需要添加权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application>
+
+        <service
+            android:name=".service.ScreenCaptureService"
+            android:foregroundServiceType="mediaProjection" />
+
+    </application>
+
+</manifest>

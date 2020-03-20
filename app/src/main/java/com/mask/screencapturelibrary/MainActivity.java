@@ -1,5 +1,6 @@
 package com.mask.screencapturelibrary;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mask.photo.interfaces.SaveBitmapCallback;
 import com.mask.photo.utils.BitmapUtils;
 import com.mask.screencapture.interfaces.ScreenCaptureCallback;
+import com.mask.screencapture.interfaces.ScreenCaptureNotificationEngine;
 import com.mask.screencapture.utils.ScreenCaptureHelper;
 
 import java.io.File;
@@ -43,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         initListener();
     }
 
+    @Override
+    protected void onDestroy() {
+        ScreenCaptureHelper.getInstance().stopCapture(this);
+        super.onDestroy();
+    }
+
     private void initView() {
         layout_root = findViewById(R.id.layout_root);
         layout_group_1 = findViewById(R.id.layout_group_1);
@@ -55,7 +63,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-
+        ScreenCaptureHelper.getInstance().setNotificationEngine(new ScreenCaptureNotificationEngine() {
+            @Override
+            public Notification getNotification() {
+                return NotificationHelper.getInstance().createSystem()
+                        .setOngoing(true)// 常驻通知栏
+                        .setTicker(getString(R.string.screen_capture_start))
+                        .setContentText(getString(R.string.screen_capture_start))
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .build();
+            }
+        });
     }
 
     private void initListener() {
@@ -90,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
      * 停止系统截图
      */
     private void doScreenCaptureStop() {
-        ScreenCaptureHelper.getInstance().stopCapture();
+        ScreenCaptureHelper.getInstance().stopCapture(this);
     }
 
     /**
