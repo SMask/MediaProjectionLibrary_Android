@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">ScreenCaptureLibrary_Android</string>
+    <string name="app_name">MediaProjectionLibrary_Android</string>
 
     <string name="title_view_root">ViewRoot</string>
     <string name="title_view_group_1">ViewGroup_1</string>

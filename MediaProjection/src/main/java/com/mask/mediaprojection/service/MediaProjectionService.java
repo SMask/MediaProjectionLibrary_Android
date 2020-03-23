@@ -1,4 +1,4 @@
-package com.mask.screencapture.service;
+package com.mask.mediaprojection.service;
 
 import android.app.Notification;
 import android.app.Service;
@@ -18,11 +18,11 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.DisplayMetrics;
 
-import com.mask.screencapture.interfaces.MediaProjectionNotificationEngine;
-import com.mask.screencapture.interfaces.MediaRecorderCallback;
-import com.mask.screencapture.interfaces.ScreenCaptureCallback;
-import com.mask.screencapture.utils.FileUtils;
-import com.mask.screencapture.utils.MediaProjectionHelper;
+import com.mask.mediaprojection.interfaces.MediaProjectionNotificationEngine;
+import com.mask.mediaprojection.interfaces.MediaRecorderCallback;
+import com.mask.mediaprojection.interfaces.ScreenCaptureCallback;
+import com.mask.mediaprojection.utils.FileUtils;
+import com.mask.mediaprojection.utils.MediaProjectionHelper;
 
 import java.io.File;
 import java.nio.ByteBuffer;

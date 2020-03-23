@@ -26,7 +26,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation project(':ScreenCapture')
+    implementation project(':MediaProjection')
     implementation "androidx.appcompat:appcompat:$var.AppCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$var.ConstraintLayoutVersion"
 }

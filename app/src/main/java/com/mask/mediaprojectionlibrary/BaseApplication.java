@@ -1,4 +1,4 @@
-package com.mask.screencapturelibrary;
+package com.mask.mediaprojectionlibrary;
 
 /**
  * 应用基类Application(继承于框架基类Application)

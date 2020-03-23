@@ -10,7 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ScreenCapture" />
+            <option value="$PROJECT_DIR$/MediaProjection" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

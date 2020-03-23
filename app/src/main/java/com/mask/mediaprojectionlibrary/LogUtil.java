@@ -1,4 +1,4 @@
-package com.mask.screencapturelibrary;
+package com.mask.mediaprojectionlibrary;
 
 import android.text.TextUtils;
 import android.util.Log;

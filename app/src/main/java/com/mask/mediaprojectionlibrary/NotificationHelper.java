@@ -1,4 +1,4 @@
-package com.mask.screencapturelibrary;
+package com.mask.mediaprojectionlibrary;
 
 import android.annotation.TargetApi;
 import android.app.Notification;

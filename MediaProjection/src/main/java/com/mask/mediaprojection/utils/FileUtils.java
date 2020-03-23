@@ -1,4 +1,4 @@
-package com.mask.screencapture.utils;
+package com.mask.mediaprojection.utils;
 
 import android.content.Context;
 import android.os.Environment;

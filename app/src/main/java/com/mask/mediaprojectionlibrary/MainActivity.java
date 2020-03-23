@@ -1,4 +1,4 @@
-package com.mask.screencapturelibrary;
+package com.mask.mediaprojectionlibrary;
 
 import android.app.Notification;
 import android.content.Intent;
@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mask.photo.interfaces.SaveBitmapCallback;
 import com.mask.photo.utils.BitmapUtils;
-import com.mask.screencapture.interfaces.MediaProjectionNotificationEngine;
-import com.mask.screencapture.interfaces.MediaRecorderCallback;
-import com.mask.screencapture.interfaces.ScreenCaptureCallback;
-import com.mask.screencapture.utils.MediaProjectionHelper;
+import com.mask.mediaprojection.interfaces.MediaProjectionNotificationEngine;
+import com.mask.mediaprojection.interfaces.MediaRecorderCallback;
+import com.mask.mediaprojection.interfaces.ScreenCaptureCallback;
+import com.mask.mediaprojection.utils.MediaProjectionHelper;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package com.mask.screencapture.interfaces;
+package com.mask.mediaprojection.interfaces;
 
 import android.graphics.Bitmap;
 

@@ -1,4 +1,4 @@
-package com.mask.screencapture.utils;
+package com.mask.mediaprojection.utils;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -9,10 +9,10 @@ import android.media.projection.MediaProjectionManager;
 import android.os.IBinder;
 import android.util.DisplayMetrics;
 
-import com.mask.screencapture.interfaces.MediaProjectionNotificationEngine;
-import com.mask.screencapture.interfaces.MediaRecorderCallback;
-import com.mask.screencapture.interfaces.ScreenCaptureCallback;
-import com.mask.screencapture.service.MediaProjectionService;
+import com.mask.mediaprojection.interfaces.MediaProjectionNotificationEngine;
+import com.mask.mediaprojection.interfaces.MediaRecorderCallback;
+import com.mask.mediaprojection.interfaces.ScreenCaptureCallback;
+import com.mask.mediaprojection.service.MediaProjectionService;
 
 /**
  * 媒体投影 帮助类
