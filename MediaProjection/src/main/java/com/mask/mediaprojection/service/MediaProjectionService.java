@@ -50,6 +50,7 @@ public class MediaProjectionService extends Service {
     private MediaRecorder mediaRecorder;
     private File mediaFile;
     private boolean isMediaRecording;
+    private MediaRecorderCallback mediaRecorderCallback;
 
     private MediaProjectionNotificationEngine notificationEngine;
 
@@ -134,7 +135,7 @@ public class MediaProjectionService extends Service {
      * 结束 媒体录制
      */
     private void stopMediaRecorder() {
-        stopRecording(null);
+        stopRecording();
 
         if (virtualDisplayMediaRecorder != null) {
             virtualDisplayMediaRecorder.release();
@@ -199,6 +200,15 @@ public class MediaProjectionService extends Service {
         mediaRecorder.setVideoSize(width, height);
         mediaRecorder.setVideoFrameRate(30);
         mediaRecorder.setVideoEncodingBitRate(5 * width * height);
+
+        mediaRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+            @Override
+            public void onError(MediaRecorder mr, int what, int extra) {
+                if (mediaRecorderCallback != null) {
+                    mediaRecorderCallback.onFail();
+                }
+            }
+        });
 
         try {
             mediaRecorder.prepare();
@@ -316,12 +326,21 @@ public class MediaProjectionService extends Service {
 
     /**
      * 开始 媒体录制
+     *
+     * @param callback callback
      */
-    public void startRecording() {
+    public void startRecording(MediaRecorderCallback callback) {
+        this.mediaRecorderCallback = callback;
         if (!isMediaRecorderEnable) {
+            if (mediaRecorderCallback != null) {
+                mediaRecorderCallback.onFail();
+            }
             return;
         }
         if (isMediaRecording) {
+            if (mediaRecorderCallback != null) {
+                mediaRecorderCallback.onFail();
+            }
             return;
         }
 
@@ -334,25 +353,23 @@ public class MediaProjectionService extends Service {
 
     /**
      * 停止 媒体录制
-     *
-     * @param callback callback
      */
-    public void stopRecording(MediaRecorderCallback callback) {
+    public void stopRecording() {
         if (!isMediaRecorderEnable) {
-            if (callback != null) {
-                callback.onFail();
+            if (mediaRecorderCallback != null) {
+                mediaRecorderCallback.onFail();
             }
         }
 
         if (mediaRecorder == null) {
-            if (callback != null) {
-                callback.onFail();
+            if (mediaRecorderCallback != null) {
+                mediaRecorderCallback.onFail();
             }
             return;
         }
         if (!isMediaRecording) {
-            if (callback != null) {
-                callback.onFail();
+            if (mediaRecorderCallback != null) {
+                mediaRecorderCallback.onFail();
             }
             return;
         }
@@ -363,12 +380,14 @@ public class MediaProjectionService extends Service {
 
         mediaRecorder = null;
 
-        if (callback != null) {
-            callback.onSuccess(mediaFile);
+        if (mediaRecorderCallback != null) {
+            mediaRecorderCallback.onSuccess(mediaFile);
         }
         mediaFile = null;
 
         isMediaRecording = false;
+
+        mediaRecorderCallback = null;
     }
 
 }

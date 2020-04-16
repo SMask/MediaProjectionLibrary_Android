@@ -145,25 +145,25 @@ public class MediaProjectionHelper {
 
     /**
      * 开始 屏幕录制
-     */
-    public void startMediaRecorder() {
-        if (mediaProjectionService == null) {
-            return;
-        }
-        mediaProjectionService.startRecording();
-    }
-
-    /**
-     * 停止 屏幕录制
      *
      * @param callback callback
      */
-    public void stopMediaRecorder(MediaRecorderCallback callback) {
+    public void startMediaRecorder(MediaRecorderCallback callback) {
         if (mediaProjectionService == null) {
             callback.onFail();
             return;
         }
-        mediaProjectionService.stopRecording(callback);
+        mediaProjectionService.startRecording(callback);
+    }
+
+    /**
+     * 停止 屏幕录制
+     */
+    public void stopMediaRecorder() {
+        if (mediaProjectionService == null) {
+            return;
+        }
+        mediaProjectionService.stopRecording();
     }
 
 }

@@ -162,14 +162,7 @@ public class MainActivity extends AppCompatActivity {
      * 开始屏幕录制
      */
     private void doMediaRecorderStart() {
-        MediaProjectionHelper.getInstance().startMediaRecorder();
-    }
-
-    /**
-     * 停止屏幕录制
-     */
-    private void doMediaRecorderStop() {
-        MediaProjectionHelper.getInstance().stopMediaRecorder(new MediaRecorderCallback() {
+        MediaProjectionHelper.getInstance().startMediaRecorder(new MediaRecorderCallback() {
             @Override
             public void onSuccess(File file) {
                 super.onSuccess(file);
@@ -186,6 +179,13 @@ public class MainActivity extends AppCompatActivity {
                 LogUtil.e("MediaRecorder onFail");
             }
         });
+    }
+
+    /**
+     * 停止屏幕录制
+     */
+    private void doMediaRecorderStop() {
+        MediaProjectionHelper.getInstance().stopMediaRecorder();
     }
 
     /**
