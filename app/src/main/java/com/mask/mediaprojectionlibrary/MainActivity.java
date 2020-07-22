@@ -3,7 +3,9 @@ package com.mask.mediaprojectionlibrary;
 import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -11,12 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mask.photo.interfaces.SaveBitmapCallback;
-import com.mask.photo.utils.BitmapUtils;
 import com.mask.mediaprojection.interfaces.MediaProjectionNotificationEngine;
 import com.mask.mediaprojection.interfaces.MediaRecorderCallback;
 import com.mask.mediaprojection.interfaces.ScreenCaptureCallback;
 import com.mask.mediaprojection.utils.MediaProjectionHelper;
+import com.mask.photo.interfaces.SaveBitmapCallback;
+import com.mask.photo.utils.BitmapUtils;
 
 import java.io.File;
 
@@ -80,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
                         .build();
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            LogUtil.i("Environment.isExternalStorageLegacy: " + Environment.isExternalStorageLegacy());
+        }
     }
 
     private void initListener() {
@@ -139,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onSuccess(bitmap);
 
                 LogUtil.i("ScreenCapture onSuccess");
-//
+
 //                int[] position = new int[2];
 //                layout_space.getLocationOnScreen(position);
 //                int width = layout_space.getWidth();
@@ -167,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(File file) {
                 super.onSuccess(file);
 
-                LogUtil.i("MediaRecorder onSuccess");
+                LogUtil.i("MediaRecorder onSuccess: " + file.getAbsolutePath());
 
                 Toast.makeText(getApplication(), getString(R.string.content_media_recorder_result, file.getAbsolutePath()), Toast.LENGTH_LONG).show();
             }
