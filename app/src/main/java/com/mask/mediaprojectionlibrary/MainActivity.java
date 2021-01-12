@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        initData();
         initListener();
+        initData();
     }
 
     @Override
@@ -67,25 +67,6 @@ public class MainActivity extends AppCompatActivity {
         btn_screen_capture = findViewById(R.id.btn_screen_capture);
         btn_media_recorder_start = findViewById(R.id.btn_media_recorder_start);
         btn_media_recorder_stop = findViewById(R.id.btn_media_recorder_stop);
-    }
-
-    private void initData() {
-        MediaProjectionHelper.getInstance().setNotificationEngine(new MediaProjectionNotificationEngine() {
-            @Override
-            public Notification getNotification() {
-                String title = getString(R.string.service_start);
-                return NotificationHelper.getInstance().createSystem()
-                        .setOngoing(true)// 常驻通知栏
-                        .setTicker(title)
-                        .setContentText(title)
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .build();
-            }
-        });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            LogUtil.i("Environment.isExternalStorageLegacy: " + Environment.isExternalStorageLegacy());
-        }
     }
 
     private void initListener() {
@@ -119,6 +100,25 @@ public class MainActivity extends AppCompatActivity {
                 doMediaRecorderStop();
             }
         });
+    }
+
+    private void initData() {
+        MediaProjectionHelper.getInstance().setNotificationEngine(new MediaProjectionNotificationEngine() {
+            @Override
+            public Notification getNotification() {
+                String title = getString(R.string.service_start);
+                return NotificationHelper.getInstance().createSystem()
+                        .setOngoing(true)// 常驻通知栏
+                        .setTicker(title)
+                        .setContentText(title)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .build();
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            LogUtil.i("Environment.isExternalStorageLegacy: " + Environment.isExternalStorageLegacy());
+        }
     }
 
     /**
