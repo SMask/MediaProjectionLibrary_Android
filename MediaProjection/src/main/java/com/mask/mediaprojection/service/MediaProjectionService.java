@@ -194,9 +194,11 @@ public class MediaProjectionService extends Service {
         // 调用顺序不能乱
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mediaRecorder.setOutputFile(mediaFile.getAbsolutePath());
         mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         mediaRecorder.setVideoSize(width, height);
         mediaRecorder.setVideoFrameRate(30);
         mediaRecorder.setVideoEncodingBitRate(5 * width * height);

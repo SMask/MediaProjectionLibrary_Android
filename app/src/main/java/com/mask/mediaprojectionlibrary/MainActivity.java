@@ -1,7 +1,9 @@
 package com.mask.mediaprojectionlibrary;
 
+import android.Manifest;
 import android.app.Notification;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.mask.mediaprojection.interfaces.MediaProjectionNotificationEngine;
 import com.mask.mediaprojection.interfaces.MediaRecorderCallback;
@@ -48,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initListener();
         initData();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
+                    requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+                }
+        }
     }
 
     @Override
